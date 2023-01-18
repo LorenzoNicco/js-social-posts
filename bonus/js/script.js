@@ -101,6 +101,13 @@ for (let i = 0; i < posts.length; i++) {
     posts[i].created = itaDate;
 }
 
+// Immagine di profile fallback
+const profilePic = document.createElement('div');
+profilePic.classList.add("profile-pic-default");
+const profileInitials = document.createElement('span');
+profileInitials.innerHTML = "LF";
+profilePic.append(profileInitials);
+
 // Creazione post
 const postContainer = document.getElementById("container");
 
@@ -110,7 +117,7 @@ while (i < posts.length) {
                                     <div class="post__header">
                                         <div class="post-meta">                    
                                             <div class="post-meta__icon">
-                                                <img class="profile-pic" src="${posts[i].author.image}" alt="Phil Mangione">                    
+                                                <img class="profile-pic" src="${posts[i].author.image}" alt="${profilePic}">                    
                                             </div>
                                             <div class="post-meta__data">
                                                 <div class="post-meta__author">${posts[i].author.name}</div>
@@ -151,12 +158,20 @@ for (let i = 0; i < likeBtnGroup.length; i++) {
             const likeBtn = document.querySelectorAll(".like-button");
             let likesCounter = document.querySelectorAll(".js-likes-counter");
 
-            likeBtn[i].classList.add("like-button--liked");
-            posts[i].likes++;
-            likesCounter[i].innerHTML++;
-            console.log("likes", posts[i].likes);
-            
-            while (likedPosts.includes(posts[i].id) == false) {
+            if (likeBtn[i].classList.contains("like-button--liked")) {
+                likeBtn[i].classList.remove("like-button--liked");
+                posts[i].likes--;
+                likesCounter[i].innerHTML--;
+                console.log("likes", posts[i].likes);
+                
+                likedPosts.splice(posts[i].id);
+            }
+            else {
+                likeBtn[i].classList.add("like-button--liked");
+                posts[i].likes++;
+                likesCounter[i].innerHTML++;
+                console.log("likes", posts[i].likes);
+                
                 likedPosts.push(posts[i].id);
             }
             console.log("liked posts", likedPosts);
