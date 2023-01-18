@@ -92,9 +92,17 @@ const posts = [
 ];
 console.log("Array post", posts);
 
+// Riformattazione data
+for (let i = 0; i < posts.length; i++) {
+    let dateSplit = posts[i].created.split("-");
+    dateSplit.reverse();
+    let itaDate = dateSplit.join("/");
+    console.log("data italiana", itaDate, typeof itaDate);
+    posts[i].created = itaDate;
+}
+
 // Creazione post
 const postContainer = document.getElementById("container");
-console.log("container", postContainer, typeof postContainer);
 
 let i = 0;
 while (i < posts.length) {
