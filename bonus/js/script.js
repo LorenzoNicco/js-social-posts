@@ -101,23 +101,30 @@ for (let i = 0; i < posts.length; i++) {
     posts[i].created = itaDate;
 }
 
-// Immagine di profile fallback
-const profilePic = document.createElement('div');
-profilePic.classList.add("profile-pic-default");
-const profileInitials = document.createElement('span');
-profileInitials.innerHTML = "LF";
-profilePic.append(profileInitials);
-
 // Creazione post
 const postContainer = document.getElementById("container");
 
 let i = 0;
 while (i < posts.length) {
+    // Immagine di profilo fallback
+    let profilePic;
+    let nameSplit = posts[i].author.name.split(" ");
+
+    if (posts[i].author.image == null) {
+        profilePic = `<div class="profile-pic-default">
+                                    <span>${nameSplit[0].charAt(0) + nameSplit[1].charAt(0)}</span>
+                                </div>`;
+    }
+    else {
+        profilePic = `<img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}"> `;
+    }
+
+    // Contenuto del post
     postContainer.innerHTML += `<div class="post">
                                     <div class="post__header">
                                         <div class="post-meta">                    
                                             <div class="post-meta__icon">
-                                                <img class="profile-pic" src="${posts[i].author.image}" alt="${profilePic}">                    
+                                                ${profilePic}                   
                                             </div>
                                             <div class="post-meta__data">
                                                 <div class="post-meta__author">${posts[i].author.name}</div>
